@@ -1,20 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCredentialDto } from './dto/create-credential.dto';
+import { CreateNoteDto } from './dto/create-note.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from '@prisma/client';
-import Cryptr = require('cryptr');
 
 @Injectable()
-export class CredentialsRepository {
-  private readonly cryptr = new Cryptr(process.env.SECRET_KEY);
-
+export class NotesRepository {
   constructor(private readonly prisma: PrismaService) { }
   
-  createCredential(user: User, createCredentialDto: CreateCredentialDto) {
-    return this.prisma.credential.create({
+  create(user: User, createNoteDto: CreateNoteDto) {
+    return this.prisma.note.create({
       data: {
-        ...createCredentialDto,
-        password: this.cryptr.encrypt(createCredentialDto.password),
+        ...createNoteDto,
         user: {
           connect: {
             id: user.id,
@@ -25,7 +21,7 @@ export class CredentialsRepository {
   }
 
   findByUserAndTitle(user: User, title: string) {
-    return this.prisma.credential.findFirst({
+    return this.prisma.note.findFirst({
       where: {
         title,
         userId: user.id,
@@ -34,7 +30,7 @@ export class CredentialsRepository {
   }
 
   findAll(user: User) {
-    return this.prisma.credential.findMany({
+    return this.prisma.note.findMany({
       where: {
         userId: user.id,
       }
@@ -42,7 +38,7 @@ export class CredentialsRepository {
   }
 
   findById(user: User, id: number) {
-    return this.prisma.credential.findFirst({
+    return this.prisma.note.findFirst({
       where: {
         id,
         userId: user.id,
@@ -51,7 +47,7 @@ export class CredentialsRepository {
   }
 
   remove(user: User, id: number) {
-    return this.prisma.credential.delete({
+    return this.prisma.note.delete({
       where: {
         id,
         userId: user.id,

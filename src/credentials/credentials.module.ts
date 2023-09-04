@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CredentialsService } from './credentials.service';
 import { CredentialsController } from './credentials.controller';
 import { CredentialsRepository } from './credentials.repository';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   controllers: [CredentialsController],

@@ -28,9 +28,9 @@ export class CredentialsService {
     return userCredentials;
   }
 
-  async findOne(user: User, id: number) {
-    const credential = await this.credentialsRepository.findOne(user, id);
-    if(!credential) throw NotFoundException;
+  async findById(user: User, id: number) {
+    const credential = await this.credentialsRepository.findById(user, id);
+    if(!credential) throw new NotFoundException();
 
     const decryptedPassword = this.cryptr.decrypt(credential.password);
 
@@ -38,8 +38,8 @@ export class CredentialsService {
   }
 
   async remove(user: User, id: number) {
-    const credential = await this.credentialsRepository.findOne(user, id);
-    if(!credential) throw NotFoundException;
+    const credential = await this.credentialsRepository.findById(user, id);
+    if(!credential) throw new NotFoundException();
 
     return await this.credentialsRepository.remove(user, id);
   }

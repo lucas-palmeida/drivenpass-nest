@@ -21,8 +21,8 @@ export class CredentialsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number, @UserDecor() user: User) {
-    return await this.credentialsService.findOne(user, id);
+  async findById(@Param('id', ParseIntPipe) id: number, @UserDecor() user: User) {
+    return await this.credentialsService.findById(user, id);
   }
 
   @Delete(':id')
