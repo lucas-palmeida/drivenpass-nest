@@ -3,7 +3,7 @@ import { EraseService } from './erase.service';
 import { CreateEraseDto } from './dto/create-erase.dto';
 import { User } from '@prisma/client';
 import { UserDecor } from '../decorators/user.decorator';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 
 @UseGuards(AuthGuard)
 @Controller('erase')

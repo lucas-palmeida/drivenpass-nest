@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateEraseDto } from './dto/create-erase.dto';
 import { User } from '@prisma/client';
 import { EraseRepository } from './erase.repository';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()

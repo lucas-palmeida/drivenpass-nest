@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Param, Delete, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { UserDecor } from 'src/decorators/user.decorator';
+import { AuthGuard } from '../guards/auth.guard';
+import { UserDecor } from '../decorators/user.decorator';
 import { User } from '@prisma/client';
 
 @UseGuards(AuthGuard)
