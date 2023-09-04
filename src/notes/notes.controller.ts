@@ -4,12 +4,20 @@ import { CreateNoteDto } from './dto/create-note.dto';
 import { AuthGuard } from '../guards/auth.guard';
 import { UserDecor } from '../decorators/user.decorator';
 import { User } from '@prisma/client';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags("notes")
 @UseGuards(AuthGuard)
 @Controller('notes')
 export class NotesController {
   constructor(private readonly notesService: NotesService) { }
 
+  @ApiOperation({
+    summary: "create a new personal note"
+  })
+  @ApiBody({
+    type: CreateNoteDto
+  })
   @Post()
   async create(@Body() createNoteDto: CreateNoteDto, @UserDecor() user: User) {
     return await this.notesService.createNote(user, createNoteDto);

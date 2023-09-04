@@ -4,12 +4,20 @@ import { CreateCardDto } from './dto/create-card.dto';
 import { AuthGuard } from '../guards/auth.guard';
 import { UserDecor } from '../decorators/user.decorator';
 import { CardType, User } from '@prisma/client';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags("cards")
 @UseGuards(AuthGuard)
 @Controller('cards')
 export class CardsController {
   constructor(private readonly cardsService: CardsService) { }
 
+  @ApiOperation({
+    summary: "create a new card"
+  })
+  @ApiBody({
+    type: CreateCardDto
+  })
   @Post()
   async createCard(@Body() createCardDto: CreateCardDto, @UserDecor() user: User) {
     return await this.cardsService.createCard(user, createCardDto);
