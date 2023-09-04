@@ -5,7 +5,7 @@ import { SignInDto } from './dto/sign-in.dto';
 
 @Controller("users")
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post("/sign-up")
   signUp(@Body() body: SignUpDto) {

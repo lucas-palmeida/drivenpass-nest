@@ -8,7 +8,6 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-
   private EXPIRATION_TIME = "7d";
   private ISSUER = "lucas-palmeida";
   private AUDIENCE = "users";
@@ -26,10 +25,10 @@ export class AuthService {
     const { email, password } = signInData;
 
     const user = await this.usersService.getUserByEmail(email);
-    if(!user) throw new UnauthorizedException("Verify email or password.");
+    if (!user) throw new UnauthorizedException("Verify email or password.");
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    if(!isPasswordValid) throw new UnauthorizedException("Verify email or password.");
+    if (!isPasswordValid) throw new UnauthorizedException("Verify email or password.");
 
     return this.createToken(user);
   }
@@ -44,5 +43,14 @@ export class AuthService {
     });
 
     return { token };
+  }
+
+  checkToken(token: string) {
+    const data = this.jwtService.verify(token, {
+      issuer: this.ISSUER,
+      audience: this.AUDIENCE
+    });
+
+    return data;
   }
 }
